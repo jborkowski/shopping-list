@@ -1,21 +1,21 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import Data.Function ((&))
-import Data.IORef
-import KVS
-import MonotonicSequence
-import ShoppingList
-import ShoppingListApp
-import Polysemy
-import Polysemy.Error
-import Polysemy.State
-import Servant.Server
-import Control.Monad.Except
-import Options.Generic
+import           Control.Monad.Except
+import           Data.Function            ((&))
+import           Data.IORef
+import           KVS
+import           MonotonicSequence
+import           Options.Generic
+import           Polysemy
+import           Polysemy.Error
+import           Polysemy.State
+import           Servant.Server
+import           ShoppingList
+import           ShoppingListApp
 
-import qualified Data.Map.Strict as M
+import qualified Data.Map.Strict          as M
 import qualified Network.Wai.Handler.Warp as W
 
 initState :: M.Map Id Item

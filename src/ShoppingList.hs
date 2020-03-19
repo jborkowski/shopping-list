@@ -1,17 +1,17 @@
 {-# LANGUAGE DeriveGeneric #-}
 module ShoppingList where
 
-import Control.Error.Safe (justErr)
-import Data.Functor ((<&>))
-import Data.Aeson.Types
-import GHC.Generics
-import Polysemy
-import Polysemy.Error
-import KVS
+import           Control.Error.Safe (justErr)
+import           Data.Aeson.Types
+import           Data.Functor       ((<&>))
+import           GHC.Generics
+import           KVS
+import           Polysemy
+import           Polysemy.Error
 --import Polysemy.KVStore
-import MonotonicSequence
-import qualified Data.Map.Strict as M
-import Data.Map.Strict (Map)
+import           Data.Map.Strict    (Map)
+import qualified Data.Map.Strict    as M
+import           MonotonicSequence
 
 
 type Id = Int
@@ -19,8 +19,8 @@ type Id = Int
 data AppError = ShoppingListItemNotFound Int
 
 data Item = Item { _productName :: String
-                 , _quantity :: Int
-                 , _bought :: Bool
+                 , _quantity    :: Int
+                 , _bought      :: Bool
                  } deriving (Show, Eq, Generic)
 
 instance ToJSON Item

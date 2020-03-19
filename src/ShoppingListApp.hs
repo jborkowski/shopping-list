@@ -1,14 +1,15 @@
 module ShoppingListApp where
 
-import Polysemy
-import Polysemy.Error
-import Data.Proxy
-import KVS
-import ShoppingList
-import MonotonicSequence
-import Servant (ServerT, Get, JSON, (:<|>), Capture, (:>), ReqBody, Post)
-import Servant
-import qualified Data.Map.Strict as M
+import qualified Data.Map.Strict   as M
+import           Data.Proxy
+import           KVS
+import           MonotonicSequence
+import           Polysemy
+import           Polysemy.Error
+import           Servant           ((:<|>), (:>), Capture, Get, JSON, Post,
+                                    ReqBody, ServerT)
+import           Servant
+import           ShoppingList
 
 
 type ShoppingListAPI
