@@ -5,26 +5,14 @@ import           Control.Error.Safe (justErr)
 import           Data.Aeson.Types
 import           Data.Functor       ((<&>))
 import           GHC.Generics
-import           KVS
+import           KVS                (KVS, listAllKVS, readKV, writeKV)
+import           Model
 import           Polysemy
 import           Polysemy.Error
 --import Polysemy.KVStore
 import           Data.Map.Strict    (Map)
 import qualified Data.Map.Strict    as M
 import           MonotonicSequence
-
-
-type Id = Int
-
-data AppError = ShoppingListItemNotFound Int
-
-data Item = Item { _productName :: String
-                 , _quantity    :: Int
-                 , _bought      :: Bool
-                 } deriving (Show, Eq, Generic)
-
-instance ToJSON Item
-instance FromJSON Item
 
 newItem :: String -> Int -> Item
 newItem productName quantity = Item productName quantity False
@@ -54,7 +42,7 @@ toggle :: Members [KVS Id Item, Error AppError] r
 toggle id = do
   itemErr <- readKV id <&> justErr (ShoppingListItemNotFound id)
   item <- either throw return itemErr
-  let bought = _bought item
-  let modified = item { _bought = not bought }
+  let completed = _completed item
+  let modified = item { _completed = not completed }
   writeKV id modified
   return modified

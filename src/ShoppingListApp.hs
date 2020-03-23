@@ -3,6 +3,7 @@ module ShoppingListApp where
 import qualified Data.Map.Strict   as M
 import           Data.Proxy
 import           KVS
+import           Model             (AppError(ShoppingListItemNotFound), Id, Item (..))
 import           MonotonicSequence
 import           Polysemy
 import           Polysemy.Error
@@ -10,7 +11,6 @@ import           Servant           ((:<|>), (:>), Capture, Get, JSON, Post,
                                     ReqBody, ServerT)
 import           Servant
 import           ShoppingList
-
 
 type ShoppingListAPI
    =    Get '[JSON] (M.Map Int Item)
