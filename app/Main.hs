@@ -47,12 +47,16 @@ data Args = Args { port :: Int, dbFile :: String } deriving (Show, Generic)
 instance ParseRecord Args
 
 withDbConnection :: String -> (SQL.Connection -> IO a) -> IO a
-withDbConnection dbFile fn = SQL.withConnection dbFile $ \conn -> do
-  SQL.execute_ conn "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, product text, quantity INTEGER, completed BOOL)"
+withDbConnection dbFile fn = do
+  conn <- SQL.open dbFile
   fn conn
+  -- something is wrong with withCOnnection - it doesent work correctly...
+  -- SQL.withConnection dbFile $ \conn -> do
+  -- SQL.execute_ conn "CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, product text, quantity INTEGER, completed BOOL)"
+  -- fn conn
 
 main :: IO ()
 main = do
   (Args port dbFile) <- getRecord "Shopping List -- Server"
-  app <- withDbConnection dbFile $ createApp
+  app <- withDbConnection dbFile createApp
   W.run port app

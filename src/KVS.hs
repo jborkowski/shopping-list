@@ -53,8 +53,8 @@ runKvsOnSQLite = P.reinterpret $ \case
   WriteKV id (Item productName quantity completed) -> do
     conn <- PI.input
     P.embed $ SQL.executeNamed conn
-      "INSERT INTO products (id, product, quantity, completed) VALUES (:id, :product, :quantity, :completed)" -- <>
-      --"ON CONFLICT (id) DO UPDATE SET product = excluded.product, quantity = excluded.quantity, completed = excluded.completed"
+      ("INSERT INTO products (id, product, quantity, completed) VALUES (:id, :product, :quantity, :completed)" <>
+      "ON CONFLICT (id) DO UPDATE SET product = excluded.product, quantity = excluded.quantity, completed = excluded.completed")
       [":id" := id, ":product" := productName, ":quantity" := quantity, ":completed" := completed]
 
   ReadKV id -> do
